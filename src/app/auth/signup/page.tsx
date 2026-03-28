@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
@@ -8,7 +8,7 @@ import { useToast } from '@/components/Toast';
 import { Zap } from '@/components/Icons';
 import type { Charity } from '@/lib/types';
 
-export default function SignupPage() {
+function SignupForm() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -163,5 +163,17 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', padding: 'var(--space-8)' }}>
+        <span className="spinner" /> Loading setup...
+      </div>
+    }>
+      <SignupForm />
+    </Suspense>
   );
 }
