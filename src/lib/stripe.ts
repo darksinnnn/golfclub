@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+// Use a dummy key during Next.js Vercel build phase if the secret isn't available
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'dummy_key_for_build_bypass', {
   apiVersion: '2024-12-18.acacia' as Stripe.LatestApiVersion,
   typescript: true,
 });
