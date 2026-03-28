@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    (process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co'),
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
@@ -50,8 +50,8 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin') && user) {
     // We MUST use the service role key to check the profile, because the anon key is blocked by user-level RLS policies on 'profiles', leading to false-positive redirects.
     const serviceClient = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      (process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co'),
+      (process.env.SUPABASE_SERVICE_ROLE_KEY || 'dummy_service_key'),
       {
         cookies: {
           getAll() { return []; },

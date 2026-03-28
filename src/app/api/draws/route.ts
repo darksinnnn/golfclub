@@ -244,8 +244,8 @@ export async function POST(request: NextRequest) {
       if (!drawId) return NextResponse.json({ error: 'Draw ID required' }, { status: 400 });
       
       const adminClient = createAdminClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
+        (process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co'),
+        (process.env.SUPABASE_SERVICE_ROLE_KEY || 'dummy_service_key')
       );
       
       // Cascade delete is usually handled by DB, but we can just delete the draw row 

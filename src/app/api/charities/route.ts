@@ -6,8 +6,8 @@ import { createServerClient } from '@supabase/ssr';
 export async function GET(request: NextRequest) {
   try {
     const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      (process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co'),
+      (process.env.SUPABASE_SERVICE_ROLE_KEY || 'dummy_service_key'),
       {
         cookies: {
           getAll() { return []; },
